@@ -1,4 +1,4 @@
-package com.tecsup.petclinic.service;
+package com.tecsup.petclinic.services;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
