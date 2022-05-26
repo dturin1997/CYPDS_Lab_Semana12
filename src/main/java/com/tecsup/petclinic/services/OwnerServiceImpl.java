@@ -27,7 +27,7 @@ public class OwnerServiceImpl implements OwnerService {
 		Optional<Owner> own = ownerRepository.findById(id);
 
 		if ( !own.isPresent())
-			throw new PetNotFoundException("Record not found...!");
+			throw new OwnerNotFoundException("Record not found...!");
 			
 		return own.get();
 	}

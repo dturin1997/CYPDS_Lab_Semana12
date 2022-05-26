@@ -1,5 +1,6 @@
 package com.tecsup.petclinic.services;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -20,10 +21,6 @@ public class OwnerServiceTest {
 	@Autowired
 	private OwnerService ownerService;
 
-	/**
-	 * 
-	 */
-	
 	@Test
 	public void testFindOwnerById() {
 
@@ -40,7 +37,7 @@ public class OwnerServiceTest {
 		}
 		logger.info("" + owner);
 
-		assertEquals(owner.getFirst_name(),NAME );
+		assertEquals(owner.getFirst_name(), is(NAME) );
 
 	}
 	
