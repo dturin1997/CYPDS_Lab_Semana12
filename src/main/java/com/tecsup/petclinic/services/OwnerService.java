@@ -1,9 +1,12 @@
 package com.tecsup.petclinic.services;
 
-import com.tecsup.petclinic.entities.Pet;
+import com.tecsup.petclinic.entities.Owner;
+import com.tecsup.petclinic.exception.OwnerNotFoundException;
 
 public interface OwnerService {
 
-	Pet update(Pet pet);
+	Owner create(Owner own);
+	
+	Owner update(Owner own);
 	
 }
