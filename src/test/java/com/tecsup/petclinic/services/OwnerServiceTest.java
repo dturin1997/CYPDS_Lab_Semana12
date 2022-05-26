@@ -24,6 +24,34 @@ public class OwnerServiceTest {
 	private OwnerService ownerService;
 
 	@Test
+	public void testDeleteOwner() {
+
+		String first_name = "Dario";
+		String last_name = "Turin";
+		String address = "Av. Siempre viva 2118";
+		String city = "Lima";
+		String telephone = "963852147";
+
+		Owner own = new Owner(first_name, last_name, address, city, telephone);
+		own = ownerService.create(own);
+		logger.info("" + own);
+
+		try {
+			ownerService.delete(own.getId());
+		} catch (OwnerNotFoundException e) {
+			assertThat(e.getMessage(), false);
+		}
+
+		try {
+			ownerService.findById(own.getId());
+			assertThat(true, is(false));
+		} catch (OwnerNotFoundException e) {
+			assertThat(true, is(true));
+		}
+
+	}
+
+	@Test
 	public void testFindOwnerById() {
 
 		long ID = 1;
@@ -69,50 +97,49 @@ public class OwnerServiceTest {
 
 	@Test
 	public void testUpdateOwnerById() {
-		
+
 		String FIRST_NAME = "Miguel";
 		String LAST_NAME = "Medina";
 		String ADDRESS = "av. bocanegra";
 		String CITY = "Callao";
 		String TELEPHONE = "935154858";
 		long created_id = -1;
-		//UPDATE
-		
+		// UPDATE
+
 		String UP_FIRST_NAME = "Luis";
 		String UP_LAST_NAME = "Carrillo";
 		String UP_ADDRESS = "av. casuarinas";
 		String UP_CITY = "Santa Anita";
 		String UP_TELEPHONE = "9999999999";
-		
+
 		Owner owner = new Owner(FIRST_NAME, LAST_NAME, ADDRESS, CITY, TELEPHONE);
-		
+
 		logger.info(">" + owner);
 		Owner ownerCreated = ownerService.create(owner);
 		logger.info(">>" + ownerCreated);
-		
+
 		created_id = ownerCreated.getId();
-		
+
 		ownerCreated.setId(created_id);
 		ownerCreated.setFirst_name(UP_FIRST_NAME);
 		ownerCreated.setLast_name(UP_LAST_NAME);
 		ownerCreated.setAddress(UP_ADDRESS);
 		ownerCreated.setCity(UP_CITY);
 		ownerCreated.setTelephone(UP_TELEPHONE);
-		
-		//Execute update
-		
+
+		// Execute update
 		Owner upgradeOwner = ownerService.update(ownerCreated);
 		logger.info(">>>>" + upgradeOwner);
-		
-		//		ACTUAL				EXPECTED
-		assertThat(created_id ,notNullValue());
+
+		// ACTUAL EXPECTED
+		assertThat(created_id, notNullValue());
 		assertThat(upgradeOwner.getId(), is(created_id));
 		assertThat(upgradeOwner.getFirst_name(), is(UP_FIRST_NAME));
 		assertThat(upgradeOwner.getLast_name(), is(UP_LAST_NAME));
 		assertThat(upgradeOwner.getAddress(), is(UP_ADDRESS));
 		assertThat(upgradeOwner.getCity(), is(UP_CITY));
 		assertThat(upgradeOwner.getTelephone(), is(UP_TELEPHONE));
-		
+
 	}
 
 }

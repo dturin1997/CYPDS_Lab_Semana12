@@ -8,5 +8,6 @@ public interface OwnerService {
 	Owner findById(long id) throws OwnerNotFoundException;
 	Owner create(Owner own);
 	Owner update(Owner own);
-	
+	void delete(Long id) throws OwnerNotFoundException;	
 }
+
