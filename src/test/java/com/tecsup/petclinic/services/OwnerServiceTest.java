@@ -20,30 +20,6 @@ public class OwnerServiceTest {
 	@Autowired
      private OwnerService ownerService;
 
-	/**
-	 * 
-	 */
-	/*
-	@Test
-	public void testFindOwnerById() {
-
-		long ID = 1;
-		String NAME = "Jaime";
-		Owner owner = null;
-		
-		try {
-			
-			owner = ownerService.findById(ID);
-			
-		} catch (OwnertNotFoundException e) {
-			fail(e.getMessage());
-		}
-		logger.info("" + owner);
-
-		assertEquals(NAME, owner.getName());
-
-	}
-	*/
 	@Test
 	public void testCreateOwner() {
 
