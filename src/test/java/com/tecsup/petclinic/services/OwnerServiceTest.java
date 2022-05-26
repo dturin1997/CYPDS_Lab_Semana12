@@ -1,6 +1,5 @@
 package com.tecsup.petclinic.services;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -21,50 +20,99 @@ import com.tecsup.petclinic.exception.OwnerNotFoundException;
 public class OwnerServiceTest {
 	private static final Logger logger = LoggerFactory.getLogger(OwnerServiceTest.class);
 
-		@Autowired
-		private OwnerService ownerService;
-		
-		@Test
-	    public void testFindOwnerById() {
+	@Autowired
+	private OwnerService ownerService;
 
-	        long ID = 1;
-	        String NAME = "George";
-	        Owner owner = null;
+	@Test
+	public void testFindOwnerById() {
 
-	        try {
+		long ID = 1;
+		String NAME = "George";
+		Owner owner = null;
 
-	            owner = ownerService.findById(ID);
+		try {
 
-	        } catch (OwnerNotFoundException e) {
-	            fail(e.getMessage());
-	        }
-	        logger.info("" + owner);
+			owner = ownerService.findById(ID);
 
-	        assertThat(owner.getFirst_name(), is(NAME) );
-
-	    }
-		
-		@Test
-		public void testCreateOwner() {
-		    String OWNER_FIRSTNAME = "Luis";
-		    String OWNER_LASTNAME = "Martinez";
-		    String OWNER_ADDRESS = "Av. Girasoles 345";
-		    String OWNER_CITY = "Lima";
-		    String OWNER_TELEPHONE = "999999999";
-		
-		    Owner owner = new Owner(OWNER_FIRSTNAME, OWNER_LASTNAME, OWNER_ADDRESS, OWNER_CITY, OWNER_TELEPHONE);
-		
-		    Owner ownerCreated = ownerService.create(owner);
-		
-		    logger.info("OWNER CREATED :" + ownerCreated);
-		
-		    //          ACTUAL                 , EXPECTED 
-		    assertThat(ownerCreated.getId()      , notNullValue());
-		    assertThat(ownerCreated.getFirst_name()    , is(OWNER_FIRSTNAME));
-		    assertThat(ownerCreated.getLast_name() , is(OWNER_LASTNAME));
-		    assertThat(ownerCreated.getAddress()  , is(OWNER_ADDRESS));
-		    assertThat(ownerCreated.getCity()  , is(OWNER_CITY));
-		    assertThat(ownerCreated.getTelephone()  , is(OWNER_TELEPHONE));
-		
+		} catch (OwnerNotFoundException e) {
+			fail(e.getMessage());
 		}
+		logger.info("" + owner);
+
+		assertThat(owner.getFirst_name(), is(NAME));
+
+	}
+
+	@Test
+	public void testCreateOwner() {
+		String OWNER_FIRSTNAME = "Luis";
+		String OWNER_LASTNAME = "Martinez";
+		String OWNER_ADDRESS = "Av. Girasoles 345";
+		String OWNER_CITY = "Lima";
+		String OWNER_TELEPHONE = "999999999";
+
+		Owner owner = new Owner(OWNER_FIRSTNAME, OWNER_LASTNAME, OWNER_ADDRESS, OWNER_CITY, OWNER_TELEPHONE);
+
+		Owner ownerCreated = ownerService.create(owner);
+
+		logger.info("OWNER CREATED :" + ownerCreated);
+
+		// ACTUAL , EXPECTED
+		assertThat(ownerCreated.getId(), notNullValue());
+		assertThat(ownerCreated.getFirst_name(), is(OWNER_FIRSTNAME));
+		assertThat(ownerCreated.getLast_name(), is(OWNER_LASTNAME));
+		assertThat(ownerCreated.getAddress(), is(OWNER_ADDRESS));
+		assertThat(ownerCreated.getCity(), is(OWNER_CITY));
+		assertThat(ownerCreated.getTelephone(), is(OWNER_TELEPHONE));
+
+	}
+
+	@Test
+	public void testUpdateOwnerById() {
+		
+		String FIRST_NAME = "Miguel";
+		String LAST_NAME = "Medina";
+		String ADDRESS = "av. bocanegra";
+		String CITY = "Callao";
+		String TELEPHONE = "935154858";
+		long created_id = -1;
+		//UPDATE
+		
+		String UP_FIRST_NAME = "Luis";
+		String UP_LAST_NAME = "Carrillo";
+		String UP_ADDRESS = "av. casuarinas";
+		String UP_CITY = "Santa Anita";
+		String UP_TELEPHONE = "9999999999";
+		
+		Owner owner = new Owner(FIRST_NAME, LAST_NAME, ADDRESS, CITY, TELEPHONE);
+		
+		logger.info(">" + owner);
+		Owner ownerCreated = ownerService.create(owner);
+		logger.info(">>" + ownerCreated);
+		
+		created_id = ownerCreated.getId();
+		
+		ownerCreated.setId(created_id);
+		ownerCreated.setFirst_name(UP_FIRST_NAME);
+		ownerCreated.setLast_name(UP_LAST_NAME);
+		ownerCreated.setAddress(UP_ADDRESS);
+		ownerCreated.setCity(UP_CITY);
+		ownerCreated.setTelephone(UP_TELEPHONE);
+		
+		//Execute update
+		
+		Owner upgradeOwner = ownerService.update(ownerCreated);
+		logger.info(">>>>" + upgradeOwner);
+		
+		//		ACTUAL				EXPECTED
+		assertThat(created_id ,notNullValue());
+		assertThat(upgradeOwner.getId(), is(created_id));
+		assertThat(upgradeOwner.getFirst_name(), is(UP_FIRST_NAME));
+		assertThat(upgradeOwner.getLast_name(), is(UP_LAST_NAME));
+		assertThat(upgradeOwner.getAddress(), is(UP_ADDRESS));
+		assertThat(upgradeOwner.getCity(), is(UP_CITY));
+		assertThat(upgradeOwner.getTelephone(), is(UP_TELEPHONE));
+		
+	}
+
 }

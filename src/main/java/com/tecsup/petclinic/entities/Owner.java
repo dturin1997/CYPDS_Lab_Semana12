@@ -4,8 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
-@Entity(name = "owners")
+@Entity
+@Table(name = "owners")
 public class Owner {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +31,7 @@ public class Owner {
 		this.city = city;
 		this.telephone = telephone;
 	}
-
+	
 	public Owner(String first_name, String last_name, String address, String city, String telephone) {
 		super();
 		this.first_name = first_name;

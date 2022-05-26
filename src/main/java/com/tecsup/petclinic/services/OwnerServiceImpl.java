@@ -1,6 +1,5 @@
 package com.tecsup.petclinic.services;
 
-
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -15,14 +14,14 @@ import com.tecsup.petclinic.exception.OwnerNotFoundException;
 import com.tecsup.petclinic.repositories.OwnerRepository;
 
 @Service
-public class OwnerServiceImpl implements OwnerService{
-	private static final Logger logger = LoggerFactory.getLogger(PetServiceImpl.class);
+public class OwnerServiceImpl implements OwnerService  {
+
+	private static final Logger logger = LoggerFactory.getLogger(OwnerServiceImpl.class);
 
 	@Autowired
 	OwnerRepository ownerRepository;
 	
 	@Override
-
 	public Owner findById(long id) throws OwnerNotFoundException {
 		
 		Optional<Owner> own = ownerRepository.findById(id);
@@ -35,6 +34,10 @@ public class OwnerServiceImpl implements OwnerService{
 
 	public Owner create(Owner owner) {
 		return ownerRepository.save(owner);
+	}
+
+	public Owner update(Owner own) {
+		return ownerRepository.save(own);
 	}
 
 }

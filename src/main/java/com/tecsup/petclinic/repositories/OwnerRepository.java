@@ -8,5 +8,4 @@ import com.tecsup.petclinic.entities.Owner;
 @Repository
 public interface OwnerRepository extends CrudRepository<Owner, Long> {
 
-
 }
