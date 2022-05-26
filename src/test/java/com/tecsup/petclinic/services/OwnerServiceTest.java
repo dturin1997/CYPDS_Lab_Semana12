@@ -1,7 +1,7 @@
 package com.tecsup.petclinic.services;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.Test;
@@ -25,7 +25,7 @@ public class OwnerServiceTest {
 	public void testFindOwnerById() {
 
 		long ID = 1;
-		String NAME = "Jaime";
+		String NAME = "George";
 		Owner owner = null;
 		
 		try {
@@ -37,7 +37,7 @@ public class OwnerServiceTest {
 		}
 		logger.info("" + owner);
 
-		assertEquals(owner.getFirst_name(), is(NAME) );
+		assertThat(owner.getFirst_name(), is(NAME) );
 
 	}
 	

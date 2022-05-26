@@ -8,11 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tecsup.petclinic.entities.Owner;
-import com.tecsup.petclinic.entities.Pet;
 import com.tecsup.petclinic.exception.OwnerNotFoundException;
-import com.tecsup.petclinic.exception.PetNotFoundException;
 import com.tecsup.petclinic.repositories.OwnerRepository;
-import com.tecsup.petclinic.repositories.PetRepository;
+
 
 @Service
 public class OwnerServiceImpl implements OwnerService {
