@@ -48,4 +48,48 @@ public class OwnerControllerTest {
 				//.andExpect(jsonPath("$[212].id", is(ID_LAST)));
 	}
 	
+	@Test
+	public void testFindOwnerOK() throws Exception {
+
+		int ID_SEARCH = 13;
+		String FIRST_NAME = "Luis";
+		String LAST_NAME = "Carrillo";
+		String ADDRESS = "av. casuarinas";
+		String CITY = "Santa Anita";
+		String TELEPHONE = "9999999999";
+
+		/*
+		 {
+		    "id": 1,
+		    "name": "Leo",
+		    "typeId": 1,
+		    "ownerId": 1,
+		    "birthDate": "2000-09-07"
+		}
+		 */
+		
+		mockMvc.perform(get("/owners/" + ID_SEARCH))  // Finding object with ID = 1
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				//.andDo(print())
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.id", is(13)))
+				.andExpect(jsonPath("$.first_name", is(FIRST_NAME)))
+				.andExpect(jsonPath("$.last_name", is(LAST_NAME)))
+				.andExpect(jsonPath("$.address", is(ADDRESS)))
+				.andExpect(jsonPath("$.city", is(CITY)))
+				.andExpect(jsonPath("$.telephone", is(TELEPHONE)));
+
+	}
+	
+	@Test
+	public void testFindOwnerKO() throws Exception {
+
+		int ID_SEARCH = 666;
+
+		
+		mockMvc.perform(get("/owners/" + ID_SEARCH)) // Finding object with ID = 666
+				.andExpect(status().isNotFound());
+
+	}
+	
 }
