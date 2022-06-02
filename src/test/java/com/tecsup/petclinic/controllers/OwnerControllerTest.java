@@ -10,7 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.net.http.HttpHeaders;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -53,18 +54,65 @@ public class OwnerControllerTest {
 				//.andExpect(jsonPath("$[212].id", is(ID_LAST)));
 	}
 	
+
+	
+
+	@Test
+	public void testFindOwnerOK() throws Exception {
+
+		int ID_SEARCH = 13;
+		String FIRST_NAME = "Luis";
+		String LAST_NAME = "Carrillo";
+		String ADDRESS = "av. casuarinas";
+		String CITY = "Santa Anita";
+		String TELEPHONE = "9999999999";
+
+		/*
+		 {
+		    "id": 1,
+		    "name": "Leo",
+		    "typeId": 1,
+		    "ownerId": 1,
+		    "birthDate": "2000-09-07"
+		}
+		 */
+		
+		mockMvc.perform(get("/owners/" + ID_SEARCH))  // Finding object with ID = 1
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				//.andDo(print())
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.id", is(13)))
+				.andExpect(jsonPath("$.first_name", is(FIRST_NAME)))
+				.andExpect(jsonPath("$.last_name", is(LAST_NAME)))
+				.andExpect(jsonPath("$.address", is(ADDRESS)))
+				.andExpect(jsonPath("$.city", is(CITY)))
+				.andExpect(jsonPath("$.telephone", is(TELEPHONE)));
+
+	}
+	
+	@Test
+	public void testFindOwnerKO() throws Exception {
+
+		int ID_SEARCH = 666;
+
+		
+		mockMvc.perform(get("/owners/" + ID_SEARCH)) // Finding object with ID = 666
+				.andExpect(status().isNotFound());
+
+	}
+	
 	/**
 	 * @throws Exception
 	 */
 	
 	@Test
-    public void testCreatePet() throws Exception {
+    public void testCreateOwner() throws Exception {
 		
-    	String first_name = "BeethovenY";
-		String last_name = "";
-		String address = "";
-		String city = "";
-		String telephone = "";
+    	String first_name = "Noe";
+		String last_name = "Sierra";
+		String address = "Santa Anita";
+		String city = "Lima";
+		String telephone = "965874512";
 		
 		OwnerDTO newowner = new OwnerDTO(first_name, last_name, address, city,telephone);
 	    
@@ -76,11 +124,12 @@ public class OwnerControllerTest {
 	            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
 	            .andDo(print())
 	            .andExpect(status().isCreated())
-	            .andExpect(jsonPath("$.name", is(first_name)))
-	            .andExpect(jsonPath("$.typeId", is(last_name)))
-	            .andExpect(jsonPath("$.ownerId", is(address)))
-	    		.andExpect(jsonPath("$.birthDate", is(city)))
-	    		.andExpect(jsonPath("$.birthDate", is(telephone)));
+	            .andExpect(jsonPath("$.first_name", is(first_name)))
+	            .andExpect(jsonPath("$.last_name", is(last_name)))
+	            .andExpect(jsonPath("$.address", is(address)))
+	    		.andExpect(jsonPath("$.city", is(city)))
+	    		.andExpect(jsonPath("$.telephone", is(telephone)));
     
 	}
+
 }
