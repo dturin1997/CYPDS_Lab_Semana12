@@ -72,7 +72,7 @@ public class OwnerControllerTest {
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
 				//.andDo(print())
 				.andExpect(status().isOk())
-				.andExpect(jsonPath("$.id", is(13)))
+				.andExpect(jsonPath("$.id", is(1)))
 				.andExpect(jsonPath("$.first_name", is(FIRST_NAME)))
 				.andExpect(jsonPath("$.last_name", is(LAST_NAME)))
 				.andExpect(jsonPath("$.address", is(ADDRESS)))
