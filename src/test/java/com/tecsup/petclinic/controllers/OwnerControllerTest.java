@@ -10,6 +10,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,9 +21,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
+
+import org.springframework.test.web.servlet.ResultActions;
+
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import com.jayway.jsonpath.JsonPath;
+
+import com.tecsup.petclinic.dto.OwnerDTO;
 
 @AutoConfigureMockMvc
 @SpringBootTest
@@ -47,7 +59,7 @@ public class OwnerControllerTest {
 				.andExpect(jsonPath("$[0].id", is(ID_FIRST)));
 				//.andExpect(jsonPath("$[212].id", is(ID_LAST)));
 	}
-	
+
 	@Test
 	public void testFindOwnerOK() throws Exception {
 
@@ -92,4 +104,65 @@ public class OwnerControllerTest {
 
 	}
 	
+<<<<<<< HEAD
+=======
+	/**
+	 * @throws Exception
+	 */
+	
+	@Test
+    public void testCreateOwner() throws Exception {
+		
+    	String first_name = "Noe";
+		String last_name = "Sierra";
+		String address = "Santa Anita";
+		String city = "Lima";
+		String telephone = "965874512";
+		
+		OwnerDTO newowner = new OwnerDTO(first_name, last_name, address, city,telephone);
+	    
+		logger.info(newowner.toString());
+		logger.info(om.writeValueAsString(newowner));
+	    
+	    mockMvc.perform(post("/owners")
+	            .content(om.writeValueAsString(newowner))
+	            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
+	            .andDo(print())
+	            .andExpect(status().isCreated())
+	            .andExpect(jsonPath("$.first_name", is(first_name)))
+	            .andExpect(jsonPath("$.last_name", is(last_name)))
+	            .andExpect(jsonPath("$.address", is(address)))
+	    		.andExpect(jsonPath("$.city", is(city)))
+	    		.andExpect(jsonPath("$.telephone", is(telephone)));
+    
+	}
+	
+	@Test
+    public void testDeleteOwner() throws Exception {
+		
+    	String FIRST_NAME = "Dario";
+    	String LAST_NAME = "Turin";
+    	String ADDRESS = "Av. Manuel Cipriano Dulanto";
+    	String CITY = "Lima";
+    	String TELEPHONE = "966857412";    	
+		
+		OwnerDTO newOwner = new OwnerDTO(FIRST_NAME, LAST_NAME, ADDRESS, CITY,TELEPHONE);
+		
+		ResultActions mvcActions = mockMvc.perform(post("/owners")
+	            .content(om.writeValueAsString(newOwner))
+	            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
+	            .andDo(print())
+	            .andExpect(status().isCreated());
+	            
+		String response = mvcActions.andReturn().getResponse().getContentAsString();
+
+		Integer id = JsonPath.parse(response).read("$.id");
+
+        mockMvc.perform(delete("/owners/" + id ))
+                 /*.andDo(print())*/
+                .andExpect(status().isOk());
+    }
+
+
+>>>>>>> 8a9f9c9e49d3bd93f9685c75a87860e53f1ee311
 }
