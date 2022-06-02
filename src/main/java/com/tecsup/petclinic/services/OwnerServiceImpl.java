@@ -46,4 +46,12 @@ public class OwnerServiceImpl implements OwnerService {
 	public Owner update(Owner own) {
 		return ownerRepository.save(own);
 	}
+	
+	@Override
+	public Iterable<Owner> findAll() {
+		
+		// TODO Auto-generated 
+		return ownerRepository.findAll();
+	
+	}
 }

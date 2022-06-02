@@ -9,5 +9,6 @@ public interface OwnerService {
 	Owner create(Owner own);
 	Owner update(Owner own);
 	void delete(Long id) throws OwnerNotFoundException;	
+	Iterable<Owner> findAll();
 }
 
