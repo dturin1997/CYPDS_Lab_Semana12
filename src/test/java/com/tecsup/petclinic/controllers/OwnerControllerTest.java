@@ -47,4 +47,15 @@ public class OwnerControllerTest {
 				.andExpect(jsonPath("$[0].id", is(ID_FIRST)));
 				//.andExpect(jsonPath("$[212].id", is(ID_LAST)));
 	}
+	
+	@Test
+	public void testFindOwnerKO() throws Exception {
+
+		int ID_SEARCH = 666;
+
+		
+		mockMvc.perform(get("/owners/" + ID_SEARCH)) // Finding object with ID = 666
+				.andExpect(status().isNotFound());
+
+	}
 }
