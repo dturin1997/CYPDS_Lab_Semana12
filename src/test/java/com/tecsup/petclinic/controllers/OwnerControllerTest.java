@@ -17,9 +17,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jayway.jsonpath.JsonPath;
+import com.tecsup.petclinic.dto.OwnerDTO;
 
 @AutoConfigureMockMvc
 @SpringBootTest
@@ -47,4 +51,30 @@ public class OwnerControllerTest {
 				.andExpect(jsonPath("$[0].id", is(ID_FIRST)));
 				//.andExpect(jsonPath("$[212].id", is(ID_LAST)));
 	}
+	
+	@Test
+    public void testDeleteOwner() throws Exception {
+		
+    	String FIRST_NAME = "Dario";
+    	String LAST_NAME = "Turin";
+    	String ADDRESS = "Av. Manuel Cipriano Dulanto";
+    	String CITY = "Lima";
+    	String TELEPHONE = "966857412";    	
+		
+		OwnerDTO newOwner = new OwnerDTO(FIRST_NAME, LAST_NAME, ADDRESS, CITY,TELEPHONE);
+		
+		ResultActions mvcActions = mockMvc.perform(post("/owners")
+	            .content(om.writeValueAsString(newOwner))
+	            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
+	            .andDo(print())
+	            .andExpect(status().isCreated());
+	            
+		String response = mvcActions.andReturn().getResponse().getContentAsString();
+
+		Integer id = JsonPath.parse(response).read("$.id");
+
+        mockMvc.perform(delete("/owners/" + id ))
+                 /*.andDo(print())*/
+                .andExpect(status().isOk());
+    }
 }
