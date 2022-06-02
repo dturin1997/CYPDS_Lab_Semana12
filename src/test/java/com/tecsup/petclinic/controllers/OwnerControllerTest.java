@@ -10,6 +10,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.net.http.HttpHeaders;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +24,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.http.MediaType;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tecsup.petclinic.dto.OwnerDTO;
 
 @AutoConfigureMockMvc
 @SpringBootTest
@@ -46,5 +51,36 @@ public class OwnerControllerTest {
 				//.andExpect(jsonPath("$", hasSize(SIZE)))
 				.andExpect(jsonPath("$[0].id", is(ID_FIRST)));
 				//.andExpect(jsonPath("$[212].id", is(ID_LAST)));
+	}
+	
+	/**
+	 * @throws Exception
+	 */
+	
+	@Test
+    public void testCreatePet() throws Exception {
+		
+    	String first_name = "BeethovenY";
+		String last_name = "";
+		String address = "";
+		String city = "";
+		String telephone = "";
+		
+		OwnerDTO newowner = new OwnerDTO(first_name, last_name, address, city,telephone);
+	    
+		logger.info(newowner.toString());
+		logger.info(om.writeValueAsString(newowner));
+	    
+	    mockMvc.perform(post("/owners")
+	            .content(om.writeValueAsString(newowner))
+	            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
+	            .andDo(print())
+	            .andExpect(status().isCreated())
+	            .andExpect(jsonPath("$.name", is(first_name)))
+	            .andExpect(jsonPath("$.typeId", is(last_name)))
+	            .andExpect(jsonPath("$.ownerId", is(address)))
+	    		.andExpect(jsonPath("$.birthDate", is(city)))
+	    		.andExpect(jsonPath("$.birthDate", is(telephone)));
+    
 	}
 }
