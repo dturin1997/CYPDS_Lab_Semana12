@@ -51,12 +51,12 @@ public class OwnerControllerTest {
 	@Test
 	public void testFindOwnerOK() throws Exception {
 
-		int ID_SEARCH = 13;
-		String FIRST_NAME = "Luis";
-		String LAST_NAME = "Carrillo";
-		String ADDRESS = "av. casuarinas";
-		String CITY = "Santa Anita";
-		String TELEPHONE = "9999999999";
+		int ID_SEARCH = 1;
+		String FIRST_NAME = "George";
+		String LAST_NAME = "Franklin";
+		String ADDRESS = "110 W. Liberty St.";
+		String CITY = "Madison";
+		String TELEPHONE = "6085551023";
 
 		/*
 		 {
