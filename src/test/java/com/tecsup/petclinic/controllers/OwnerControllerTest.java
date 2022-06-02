@@ -81,5 +81,16 @@ public class OwnerControllerTest {
 
 	}
 	
+	@Test
+	public void testFindOwnerKO() throws Exception {
+
+		int ID_SEARCH = 666;
+
+		
+		mockMvc.perform(get("/owners/" + ID_SEARCH)) // Finding object with ID = 666
+				.andExpect(status().isNotFound());
+
+	}
+	
 	
 }
